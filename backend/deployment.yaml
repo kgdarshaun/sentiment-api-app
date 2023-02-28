@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentiment-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentiment-backend
+  template:
+    metadata:
+      labels:
+        app: sentiment-backend
+    spec:
+      containers:
+      - name: sentiment-backend-app
+        image: us-west1-docker.pkg.dev/project-756-todo/sentiment-repo/sentiment-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
