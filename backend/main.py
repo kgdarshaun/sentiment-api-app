@@ -19,8 +19,8 @@ def get_sentiment():
 	print(requestJson)
 	data = requestJson['text']
 	sia = SentimentIntensityAnalyzer()
-	sentiment = 'POSITIVE' if sia.polarity_scores(data).get('compound') >= 0 else 'NEGATIVE'
-	return {'sentiment': sentiment}
+	sentiment_score = sia.polarity_scores(data).get('compound')
+	return {'sentiment_score': round(sentiment_score, 2)}
 
 if __name__ == '__main__':
 	app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
