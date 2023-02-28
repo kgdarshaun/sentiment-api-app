@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subjectivity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subjectivity
+  template:
+    metadata:
+      labels:
+        app: subjectivity
+    spec:
+      containers:
+      - name: subjectivity-app
+        image: us-west1-docker.pkg.dev/project-756-todo/sentiment-repo/subjectivity:latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
