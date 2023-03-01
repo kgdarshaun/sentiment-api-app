@@ -10,7 +10,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const sentiment_endpoint = 'http://localhost:8081/sentiment';
+const sentiment_endpoint = 'http://localhost:8081/polarity';
 const subjectivity_endpoint = 'http://localhost:8082/subjectivity';
 
 class Main extends React.Component {
@@ -54,8 +54,8 @@ class Main extends React.Component {
       text: input_value
     })
     .then(response => {
-      let sentiment_score = response.data.sentiment_score
-      if(sentiment_score === 0){
+      let sentiment_score = response.data.sentiment_score.toFixed(2)
+      if(sentiment_score === 0.00){
         this.setState({ sentiment: 'NEUTRAL' })
         this.setState({ color: 'success' })
       } else if(sentiment_score > 0){
@@ -69,12 +69,12 @@ class Main extends React.Component {
     .catch(error => {
       console.error(error);
     });
+
     axios.post(subjectivity_endpoint, {
       text: input_value
     })
     .then(response => {
-      console.log(response.data.subjectivity)
-      this.setState({ subjectivity: response.data.subjectivity })
+      this.setState({ subjectivity: (response.data.subjectivity*100).toFixed(0) })
     })
     .catch(error => {
       console.error(error);
