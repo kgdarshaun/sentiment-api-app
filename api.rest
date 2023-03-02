@@ -1,0 +1,24 @@
+
+GET http://localhost:8081
+
+###
+
+POST http://localhost:8081/polarity
+content-type: application/json
+
+{
+    "text": "I am happy"
+}
+
+###
+
+GET http://localhost:8082
+
+###
+
+POST http://localhost:8082/subjectivity
+content-type: application/json
+
+{
+    "text": "I am a bad boy"
+}

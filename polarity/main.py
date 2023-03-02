@@ -13,14 +13,14 @@ CORS(app)
 def hello():
     return 'Hello, World!'
 
-@app.route('/sentiment', methods=['POST'])
-def get_sentiment():
+@app.route('/polarity', methods=['POST'])
+def get_polarity():
 	requestJson = request.get_json(force=True)
 	print(requestJson)
 	data = requestJson['text']
 	sia = SentimentIntensityAnalyzer()
-	sentiment_score = sia.polarity_scores(data).get('compound')
-	return {'sentiment_score': round(sentiment_score, 2)}
+	polarity_score = sia.polarity_scores(data).get('compound')
+	return {'sentiment_score': polarity_score}
 
 if __name__ == '__main__':
 	app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
