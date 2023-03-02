@@ -15,7 +15,7 @@ def get_sentiment():
 	requestJson = request.get_json(force=True)
 	print(requestJson)
 	data = requestJson['text']
-	return {'subjectivity': round(TextBlob(data).sentiment.subjectivity*100, 2)}
+	return {'subjectivity': TextBlob(data).sentiment.subjectivity}
 
 if __name__ == '__main__':
 	app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8081)))

@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sentiment-backend
+  name: polarity
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sentiment-backend
+      app: polarity
   template:
     metadata:
       labels:
-        app: sentiment-backend
+        app: polarity
     spec:
       containers:
-      - name: sentiment-backend-app
-        image: us-west1-docker.pkg.dev/project-756-todo/sentiment-repo/sentiment-backend:latest
+      - name: polarity-app
+        # Change image path to your respectively built image
+        image: us-west1-docker.pkg.dev/project-756/sentiment-repo/polarity:latest 
         ports:
         - containerPort: 8080
         env:
