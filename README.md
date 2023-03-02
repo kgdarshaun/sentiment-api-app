@@ -82,27 +82,27 @@ Under Construction
 0. Make sure you are authenticated to use gcloud CLI with either your user or IAM user (with required permission)
 
 1. Create GKE cluster (get region details [here](https://cloud.google.com/compute/docs/regions-zones))
-```sh
-gcloud container clusters create-auto <cluster_name> \
-  --region <region_name>
-```
+	```sh
+	gcloud container clusters create-auto <cluster_name> \
+	--region <region_name>
+	```
 
 2. Build images of the backend web API services and push them to GCP artifact registry
-```sh
-# Build Polarity Image and 
-gcloud builds submit \
-  --tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/polarity polarity/
+	```sh
+	# Build Polarity Image and 
+	gcloud builds submit \
+	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/polarity polarity/
 
-gcloud builds submit \
-  --tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/subjectivity subjectivity/
-```
+	gcloud builds submit \
+	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/subjectivity subjectivity/
+	```
 
 3. Set up proper image name (used in previous step) in the delpoyment files in the backend services folder ('_image_' parameters)
 	- Polarity = polarity/deployment.yaml
 	- Subjectivity = polarity/deployment.yaml
 
 4. Deploy the backend web API workflow and service using images pushed in 1 step
-```sh
+	```sh
 	# Deploye Polarity Workflow
 	kubectl apply -f polarity/deployment.yaml
 
@@ -115,7 +115,7 @@ gcloud builds submit \
 
 	# Deploy Subjectivity Service
 	kubectl apply -f subjectivity/service.yaml
-```
+	```
 
 5. Go to _Kubernetes Engine_ dashboard in GCP web console and get the 'EXTERNAL IP' from the _services_  tab for both the backend services deployed and update them in the Frontend URL references in 'frontend/stc/Main.js' as
 	```js
@@ -124,22 +124,22 @@ gcloud builds submit \
 	```
 
 6. Build images of the frontend service and push them to GCP artifact registry
-```sh
-# Build Polarity Image and 
-gcloud builds submit \
-  --tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend frontend/
-```
+	```sh
+	# Build Polarity Image and 
+	gcloud builds submit \
+	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend frontend/
+	```
 
 7. Set up proper image name (used in previous step) in the delpoyment files in the frontend service folder ('_image_' parameters) - frontend/deployment.yaml
 
 8. Deploy the backend web API workflow and service using images pushed in step 6
-```sh
+	```sh
 	# Deploye Frontend Workflow
 	kubectl apply -f frontend/deployment.yaml
 
 	# Deploy Frontend Service
 	kubectl apply -f frontend/service.yaml
-```
+	```
 
 9. Access the web Frontend using the EXTERNAL IP provided in _Kubernetes Engine_ dashboard under _services_ tab
 
@@ -151,24 +151,24 @@ gcloud builds submit \
 ### Steps
 0. Make sure you are authenticated to use gcloud CLI with either your user or IAM user (with required permission)
 1. Build images of the backend web API services and push them to GCP artifact registry (Skip if already done)
-```sh
-# Build and push Polarity Image
-gcloud builds submit \
-  --tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/polarity polarity/
+	```sh
+	# Build and push Polarity Image
+	gcloud builds submit \
+	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/polarity polarity/
 
-# Build and push Subjectivity Image
-gcloud builds submit \
-  --tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/subjectivity subjectivity/
-```
+	# Build and push Subjectivity Image
+	gcloud builds submit \
+	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/subjectivity subjectivity/
+	```
 
 2. Deploy the cloud run services for the backend services
-```sh
-## Deploy Polarity service
-gcloud run deploy polarity --image <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/polairty
+	```sh
+	## Deploy Polarity service
+	gcloud run deploy polarity --image <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/polairty
 
-## Deploy Subjectivity service
-gcloud run deploy subjectivity --image <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/subjectivity
-```
+	## Deploy Subjectivity service
+	gcloud run deploy subjectivity --image <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/subjectivity
+	```
 
 3. Go to Cloud Run dashboard in GCP console, get the '_URL_' parameter for the backend services and update the IPs in the frontend URL references
 	```js
@@ -177,13 +177,13 @@ gcloud run deploy subjectivity --image <region_name>-docker.pkg.dev/<project_nam
 	```
 
 4. Build imageof frontend service and push them to GCP artifact registry (Skip if already done)
-```sh
-gcloud builds submit \
-  --tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend frontend/
-```
+	```sh
+	gcloud builds submit \
+	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend frontend/
+	```
 
 5. Deploy the cloud run services for the frontend service
-```sh
-## Deploy Subjectivity service
-gcloud run deploy subjectivity --image <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend
-```
+	```sh
+	## Deploy Subjectivity service
+	gcloud run deploy subjectivity --image <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend
+	```
