@@ -65,21 +65,25 @@ class Main extends React.Component {
         this.setState({ sentiment: 'NEGATIVE' })
         this.setState({ color: 'error' })
       }
+      this.setState({ loading: false })
     })
     .catch(error => {
       console.error(error);
+      this.setState({ loading: false })
     });
 
+    this.setState({ loading: true })
     axios.post(subjectivity_endpoint, {
       text: input_value
     })
     .then(response => {
-      this.setState({ subjectivity: (response.data.subjectivity*100).toFixed(0) })
+      this.setState({ subjectivity: (parseFloat(response.data.subjectivity)*100).toFixed(0) })
+      this.setState({ loading: false })
     })
     .catch(error => {
       console.error(error);
+      this.setState({ loading: false })
     });
-    this.setState({ loading: false })
   }
 
   render() {
@@ -99,7 +103,7 @@ class Main extends React.Component {
                 required
                 fullWidth
                 multiline
-                id="outlined-multiline-flexible"
+                id="text-input"
                 label="Text"
                 autoFocus
                 value={this.state.input} 
@@ -112,6 +116,7 @@ class Main extends React.Component {
                 sx={{ marginTop: 3, marginBottom: 2 }}
                 onClick={this.handleSentimentClick}
                 disabled={this.state.empty}
+                id='compute-button'
               >
                 compute
               </LoadingButton>
@@ -129,6 +134,7 @@ class Main extends React.Component {
                 variant="text" 
                 color={this.state.color}
                 onClick={() => {navigator.clipboard.writeText(this.state.sentiment)}}
+                id="polarity"
               >
                 sentiment : {this.state.sentiment}
               </Button>
@@ -157,6 +163,7 @@ class Main extends React.Component {
                     variant="caption"
                     component="div"
                     color="primary"
+                    id="subjectivity"
                   >{`${Math.round(this.state.subjectivity)}%`}</Typography>
                 </Box>
               </Box>
