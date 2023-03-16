@@ -39,7 +39,6 @@ Under Construction
 ## Local Deployment
 ### Pre-requisite
 - Download and install [Docker](https://docs.docker.com/get-docker/)
-- Create a repository in Artifact Registry in GCP (can be either be done via cnsole or CLI) - [docs](https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker)
 
 ### Steps
 0. Make sure docker (service) is running in background
@@ -76,7 +75,9 @@ Under Construction
 ## GCP Deployment (GKE)
 ### Pre-requisites
 - Download and install [glcoud CLI](https://cloud.google.com/sdk/docs/install)
+- Kubectl needs to be installed and setup with GKE cluster to interact with the Kubernetes cluster. Instruction to install and setup can be found [here](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)
 - Create a repository in Artifact Registry in GCP (can be either be done via cnsole or CLI) - [docs](https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker)
+
 
 ### Steps
 0. Make sure you are authenticated to use gcloud CLI with either your user or IAM user (with required permission)
@@ -89,10 +90,11 @@ Under Construction
 
 2. Build images of the backend web API services and push them to GCP artifact registry
 	```sh
-	# Build Polarity Image and 
+	# Build and Push Polarity Image
 	gcloud builds submit \
 	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/polarity polarity/
 
+	# Build and Push Subjectivity Image
 	gcloud builds submit \
 	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/subjectivity subjectivity/
 	```
@@ -125,7 +127,7 @@ Under Construction
 
 6. Build images of the frontend service and push them to GCP artifact registry
 	```sh
-	# Build Polarity Image and 
+	# Build and push Frontend Image
 	gcloud builds submit \
 	--tag <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend frontend/
 	```
@@ -147,6 +149,7 @@ Under Construction
 ## GCP Deployment (Cloud Run)
 ### Pre-requisites
 - Download and install [glcoud CLI](https://cloud.google.com/sdk/docs/install)
+- Create a repository in Artifact Registry in GCP (can be either be done via cnsole or CLI) - [docs](https://cloud.google.com/artifact-registry/docs/repositories/create-repos#docker)
 
 ### Steps
 0. Make sure you are authenticated to use gcloud CLI with either your user or IAM user (with required permission)
@@ -184,6 +187,6 @@ Under Construction
 
 5. Deploy the cloud run services for the frontend service
 	```sh
-	## Deploy Subjectivity service
+	## Deploy Frontend service
 	gcloud run deploy subjectivity --image <region_name>-docker.pkg.dev/<project_name>/<artifactory_repo_name>/frontend
 	```
